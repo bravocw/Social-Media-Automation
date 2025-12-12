@@ -160,7 +160,7 @@ Bagian ini ditujukan untuk **developer** atau **tim internal** yang ingin menjal
 Pastikan environment berikut sudah terinstall:
 
 - **Windows OS**
-- **Node.js >= 16**
+- **Node.js >= 22**
 - **Git**
 - Android device dengan:
   - USB Debugging aktif
@@ -176,10 +176,8 @@ npm -v
 ###2️⃣ Clone Repository
 
 ```bash
-Copy code
-git clone https://github.com/USERNAME/REPO_NAME.git
-cd adb-automation
-Ganti USERNAME/REPO_NAME sesuai repository kamu.
+git clone https://github.com/bravocw/Social-Media-Automation.git
+cd Social-Media-Automation
 ```
 
 ###3️⃣ Install Dependency
@@ -368,9 +366,6 @@ Aplikasi otomatis mendeteksi:
 
 Log juga tersimpan di file:
 activity_log.txt
-
-yaml
-Copy code
 
 ---
 
