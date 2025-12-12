@@ -173,7 +173,6 @@ ipcMain.handle("export-devices-excel", async (event, deviceList) => {
             views: [{ state: "frozen", ySplit: 1 }]
         });
 
-        // Define columns
         sheet.columns = [
             { header: "No", key: "no", width: 6 },
             { header: "Device ID", key: "device", width: 22 },
@@ -183,7 +182,6 @@ ipcMain.handle("export-devices-excel", async (event, deviceList) => {
             { header: "Status", key: "status", width: 15 }
         ];
 
-        // HEADER DESIGN
         const header = sheet.getRow(1);
         header.height = 28;
 
@@ -212,7 +210,6 @@ ipcMain.handle("export-devices-excel", async (event, deviceList) => {
             };
         });
 
-        // BODY DATA
         deviceList.forEach((d, i) => {
             const row = sheet.addRow({
                 no: i + 1,
@@ -224,39 +221,28 @@ ipcMain.handle("export-devices-excel", async (event, deviceList) => {
             });
 
             row.height = 22;
-
-            // Zebra Style
             const zebra = i % 2 === 0 ? "FFF5F5F5" : "FFFFFFFF";
 
             row.eachCell((cell, colNum) => {
-                // Fill background
                 cell.fill = {
                     type: "pattern",
                     pattern: "solid",
                     fgColor: { argb: zebra }
                 };
-
-                // Base text font
                 cell.font = {
                     size: 11,
                     name: "Segoe UI"
                 };
-
-                // Alignment
                 cell.alignment = {
                     vertical: "middle",
                     horizontal: colNum === 5 || colNum === 6 ? "center" : "left"
                 };
-
-                // Border clean thin
                 cell.border = {
                     top: { style: "thin" },
                     left: { style: "thin" },
                     bottom: { style: "thin" },
                     right: { style: "thin" }
                 };
-
-                // STATUS COLORING
                 if (colNum === 6) {
                     cell.font = {
                         bold: true,
@@ -269,8 +255,6 @@ ipcMain.handle("export-devices-excel", async (event, deviceList) => {
                 }
             });
         });
-
-        // Auto filter
         sheet.autoFilter = {
             from: { row: 1, column: 1 },
             to: { row: 1, column: 6 }

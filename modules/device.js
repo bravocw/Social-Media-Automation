@@ -148,16 +148,13 @@ async function scanFullOLD() {
 
 async function restartInstagram(deviceId) {
     try {
-        // Force stop IG
         await run(adbCmd(`-s ${deviceId} shell am force-stop com.instagram.android`));
         await delay(500);
-
-        // Start IG normal
         await run(adbCmd(
             `-s ${deviceId} shell am start -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -n com.instagram.android/.activity.MainTabActivity`
         ));
 
-        await delay(1500); // beri waktu IG membuka
+        await delay(1500);
     } catch (e) {
         console.log(`❌ Gagal restart IG di device ${deviceId}`, e);
     }
@@ -168,22 +165,17 @@ async function scanFull() {
     const devices = await getDevices();
     if (devices.length === 0) return [];
 
-    const BATCH_SIZE = 10; // aman untuk 100 device
+    const BATCH_SIZE = 10;
     const results = [];
 
-    // bagi menjadi beberapa batch
     for (let i = 0; i < devices.length; i += BATCH_SIZE) {
         const batch = devices.slice(i, i + BATCH_SIZE);
         console.log(`🚀 Memproses batch ${i / BATCH_SIZE + 1} (${batch.length} device)...`);
-
-        // jalankan paralel untuk batch ini
         const batchResults = await Promise.all(
             batch.map(dev => safeScanDevice(dev))
         );
 
         results.push(...batchResults);
-
-        // beri jeda ringan antar batch agar ADB tidak overload
         await delay(500);
     }
 
@@ -192,10 +184,7 @@ async function scanFull() {
 
 async function safeScanDevice(dev) {
     try {
-        // Restart IG dulu
         await restartInstagram(dev);
-
-        // Jalankan scan detail
         return await scanOneDevice(dev);
 
     } catch (err) {
