@@ -147,21 +147,79 @@ adb-automation/
 
 ---
 
-## 🚀 Cara Menjalankan
+## 🧑‍💻 Install & Setup dari Git (Developer)
 
-### Development
+Bagian ini ditujukan untuk **developer** atau **tim internal** yang ingin menjalankan atau membuild aplikasi langsung dari source code GitHub.
+
+> ⚠️ **User akhir (.exe) TIDAK perlu mengikuti bagian ini**
+
+---
+
+### 1️⃣ Prasyarat
+
+Pastikan environment berikut sudah terinstall:
+
+- **Windows OS**
+- **Node.js >= 16**
+- **Git**
+- Android device dengan:
+  - USB Debugging aktif
+  - Instagram sudah login
+
+Cek versi Node.js:
+
+```bash
+node -v
+npm -v
+```
+
+###2️⃣ Clone Repository
+
+```bash
+Copy code
+git clone https://github.com/USERNAME/REPO_NAME.git
+cd adb-automation
+Ganti USERNAME/REPO_NAME sesuai repository kamu.
+```
+
+###3️⃣ Install Dependency
 
 ```bash
 npm install
+```
+
+###4️⃣ Menjalankan Aplikasi (Development Mode)
+
+```bash
 npm start
 ```
 
-### Persyaratan
+Aplikasi Electron akan terbuka dalam mode development.
 
-- Windows
-- Node.js >= 16
-- Android device dengan USB Debugging aktif
-- Instagram sudah login
+###5️⃣ Build Aplikasi Menjadi .exe
+Untuk membuat installer / executable:
+
+```bash
+npm run build
+```
+
+Hasil build akan berada di folder:
+
+```text
+dist/
+```
+
+File .exe inilah yang akan dibagikan ke user akhir.
+
+###6️⃣ Update Source Code
+Jika ada update dari repository:
+
+```bash
+git pull
+npm install
+npm install aman dijalankan berulang kali dan hanya mengupdate dependency yang berubah.
+
+```
 
 ---
 
