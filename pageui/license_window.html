@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>License Activation</title>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #4f46e5, #2563eb, #0ea5e9);
+        background-size: 300% 300%;
+        animation: gradientShift 10s ease infinite;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Segoe UI", Arial, sans-serif;
+        overflow: hidden;
+      }
+
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .glass-box {
+        width: 420px;
+        padding: 35px;
+        background: rgba(255, 255, 255, 0.12);
+        border-radius: 18px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        text-align: center;
+        color: #fff;
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+        animation: fadeIn 0.8s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        margin-bottom: 15px;
+      }
+
+      .icon-lock {
+        font-size: 42px;
+        margin-bottom: 10px;
+        opacity: 0.9;
+      }
+
+      input {
+        width: 90%;
+        padding: 14px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        margin-top: 20px;
+        font-size: 16px;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.85);
+        color: #333;
+      }
+
+      button {
+        width: 95%;
+        margin-top: 22px;
+        padding: 13px;
+        background: #10b981;
+        color: white;
+        font-size: 17px;
+        font-weight: 600;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        transition: 0.25s;
+      }
+
+      button:hover {
+        background: #059669;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+      }
+
+      #status {
+        margin-top: 18px;
+        font-size: 15px;
+        min-height: 22px;
+      }
+
+      .success {
+        color: #bbf7d0;
+        font-weight: bold;
+      }
+      .error {
+        color: #fecaca;
+        font-weight: bold;
+      }
+
+      /* Loader */
+      .loader {
+        margin: 10px auto 0;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-top: 3px solid #fff;
+        border-radius: 50%;
+        width: 26px;
+        height: 26px;
+        animation: spin 0.7s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="glass-box">
+      <div class="icon-lock">🔒</div>
+      <h2>Activate Your License</h2>
+
+      <input id="key" placeholder="Enter your license key..." />
+
+      <button onclick="activate()">Activate</button>
+
+      <div id="status"></div>
+    </div>
+
+    <script>
+      async function activate() {
+        const key = document.getElementById("key").value.trim();
+        const status = document.getElementById("status");
+
+        if (!key) {
+          status.textContent = "License key cannot be empty.";
+          status.className = "error";
+          return;
+        }
+
+        status.innerHTML = '<div class="loader"></div>';
+        status.className = "";
+
+        const result = await window.api.submitLicense(key);
+
+        if (result.success === true) {
+          status.textContent = result.message || "License validated!";
+          status.className = "success";
+
+          setTimeout(() => {
+            window.close();
+          }, 900);
+        } else {
+          status.textContent = result.message || "Invalid license key!";
+          status.className = "error";
+        }
+      }
+    </script>
+  </body>
+</html>

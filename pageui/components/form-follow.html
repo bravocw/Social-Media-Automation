@@ -1,0 +1,35 @@
+<div class="form-card">
+  <h3 class="form-title">👤 Auto Follow</h3>
+
+  <div class="form-group">
+    <label>URL Profil / Username:</label>
+    <input
+      id="url"
+      class="form-control"
+      placeholder="https://www.instagram.com/username/ atau username saja"
+    />
+  </div>
+
+  <div class="form-group">
+    <label>Jumlah Follow:</label>
+    <input id="count" type="number" class="form-control" placeholder="10" />
+  </div>
+
+  <div class="delay-row">
+    <div class="form-group">
+      <label>Delay (detik):</label>
+      <input id="delay" type="number" class="form-control" placeholder="10" />
+    </div>
+
+    <div class="form-group">
+      <label>Random (detik):</label>
+      <input id="random" type="number" class="form-control" value="5" />
+    </div>
+  </div>
+
+  <button id="submitFollow" class="btn btn-success btn-submit">
+    🚀 Mulai Follow
+  </button>
+
+  <p id="status" class="form-status"></p>
+</div>

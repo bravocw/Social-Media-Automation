@@ -1,0 +1,53 @@
+{
+  "name": "social-media-automation",
+  "version": "1.1.15",
+  "description": "Social Media Automation Tools with ADB",
+  "main": "main.js",
+  "author": "Bravo Creative Works",
+  "license": "ISC",
+  "scripts": {
+    "start": "electron .",
+    "prebuild": "node auto-version.js",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.sma.automation",
+    "productName": "Social Media Automation",
+    "files": [
+      "**/*"
+    ],
+    "extraResources": [
+      "adb.exe",
+      "AdbWinApi.dll",
+      "AdbWinUsbApi.dll",
+      "build/logo.png"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "license": "license.txt",
+      "include": "build/installer.nsh"
+    }
+  },
+  "devDependencies": {
+    "electron": "^39.2.5",
+    "electron-builder": "^24.9.1",
+    "electron-reload": "^2.0.0-alpha.1"
+  },
+  "dependencies": {
+    "axios": "^1.13.2",
+    "chokidar": "^5.0.0",
+    "exceljs": "^4.4.0",
+    "javascript-obfuscator": "^5.0.1",
+    "semver": "^7.7.3"
+  }
+}

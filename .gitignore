@@ -1,0 +1,8 @@
+node_modules/
+dist/
+activity_log.txt
+layout_cache.json
+ig.xml
+accounts.json
+license.txt
+

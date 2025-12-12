@@ -1,0 +1,44 @@
+<div class="form-card">
+  <h3 class="form-title">💬 Auto Komentar</h3>
+
+  <div class="form-group">
+    <label>URL Postingan:</label>
+    <input
+      id="url"
+      class="form-control"
+      placeholder="https://www.instagram.com/p/.../"
+    />
+  </div>
+
+  <div class="form-group">
+    <label>Komentar (1 per baris):</label>
+    <textarea
+      id="comments"
+      rows="4"
+      class="form-control"
+      placeholder="Komentar 1&#10;Komentar 2"
+    ></textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Jumlah Komentar:</label>
+    <input id="count" type="number" class="form-control" placeholder="10" />
+  </div>
+  <div class="delay-row">
+    <div class="form-group">
+      <label>Delay (detik):</label>
+      <input id="delay" type="number" class="form-control" placeholder="10" />
+    </div>
+
+    <div class="form-group">
+      <label>Random (detik):</label>
+      <input id="random" type="number" class="form-control" value="5" />
+    </div>
+  </div>
+
+  <button id="submitComment" class="btn btn-warning btn-submit">
+    🚀 Mulai Komentar
+  </button>
+
+  <p id="status" class="form-status"></p>
+</div>

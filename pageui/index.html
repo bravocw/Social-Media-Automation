@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <!-- BOOTSTRAP CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+
+    <style>
+      body {
+        height: 100vh;
+        background: linear-gradient(135deg, #1e2a38, #0f172a);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-family: "Segoe UI", Roboto, sans-serif;
+      }
+
+      .card-box {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 40px 50px;
+        border-radius: 18px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(12px);
+        text-align: center;
+        width: 420px;
+        animation: fadeIn 0.6s ease;
+      }
+
+      h1 {
+        font-weight: 600;
+        margin-bottom: 25px;
+        letter-spacing: 0.5px;
+        font-size: 26px;
+      }
+
+      #scanBtn {
+        font-size: 18px;
+        padding: 14px 30px;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.25s ease;
+      }
+
+      #scanBtn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 18px rgba(0, 123, 255, 0.35);
+      }
+
+      .spinner-border {
+        width: 3rem;
+        height: 3rem;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card-box">
+      <h1></h1>
+
+      <button
+        id="scanBtn"
+        class="btn btn-primary w-100"
+        style="font-size: 18px"
+      >
+        🔍 Scan Device
+      </button>
+
+      <div id="loading" class="text-center mt-4 d-none">
+        <div class="spinner-border text-light"></div>
+        <p class="mt-3 mb-0" style="font-size: 15px; opacity: 0.85">
+          Sedang memindai device & mengambil username IG...
+        </p>
+      </div>
+    </div>
+
+    <script>
+      const scanBtn = document.getElementById("scanBtn");
+      const loading = document.getElementById("loading");
+
+      scanBtn.onclick = async () => {
+        scanBtn.disabled = true;
+        scanBtn.innerText = "Scanning...";
+        loading.classList.remove("d-none");
+
+        try {
+          let result = await window.api.scanFull();
+          sessionStorage.setItem("devices", JSON.stringify(result));
+
+          window.location = "dashboard.html";
+        } catch (e) {
+          alert("Gagal scan device: " + e);
+          scanBtn.disabled = false;
+          scanBtn.innerText = "Scan Device";
+          loading.classList.add("d-none");
+        }
+      };
+    </script>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", async () => {
+        const appName = await window.api.getAppName();
+        document.title = appName;
+        document.querySelector("h1").innerText = appName;
+      });
+    </script>
+  </body>
+</html>

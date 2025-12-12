@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Update Tersedia</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background: #0f172a;
+        color: #e5e7eb;
+      }
+      button {
+        margin-top: 20px;
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        border-radius: 6px;
+        background: #10b981;
+        color: white;
+      }
+      button:disabled {
+        background: #6b7280;
+        cursor: not-allowed;
+      }
+      .changelog {
+        margin-top: 10px;
+        color: #9ca3af;
+        white-space: pre-line;
+        font-size: 14px;
+      }
+      #progressBar {
+        margin-top: 15px;
+        width: 100%;
+        height: 10px;
+        background: #1e293b;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      #progressFill {
+        width: 0%;
+        height: 100%;
+        background: #10b981;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>🚀 Update Baru Tersedia</h2>
+    <p id="version">Mengambil info...</p>
+    <div id="changes" class="changelog"></div>
+
+    <button id="btnUpdate" onclick="startUpdate()">Update Sekarang</button>
+
+    <div id="progress">Menunggu...</div>
+
+    <div id="progressBar">
+      <div id="progressFill"></div>
+    </div>
+
+    <script>
+      window.api.getUpdateInfo().then((info) => {
+        if (!info) {
+          document.getElementById("version").innerText =
+            "Gagal mengambil info.";
+          return;
+        }
+        document.getElementById("version").innerText =
+          "Versi baru: " + info.latest;
+        document.getElementById("changes").innerText =
+          "Catatan update:\n" + (info.changelog || "-");
+      });
+
+      function startUpdate() {
+        const btn = document.getElementById("btnUpdate");
+        btn.disabled = true;
+        btn.innerText = "Memulai update...";
+
+        document.getElementById("progress").innerText = "Downloading...";
+
+        window.api.update().then((ok) => {
+          if (!ok) {
+            btn.disabled = false;
+            btn.innerText = "Update Sekarang";
+            document.getElementById("progress").innerText = "❌ Update gagal.";
+          }
+        });
+      }
+
+      window.api.onUpdateProgress((percent) => {
+        percent = parseFloat(percent) || 0;
+
+        document.getElementById("progress").innerText =
+          "Progress download: " + percent.toFixed(1) + "%";
+
+        document.getElementById("progressFill").style.width = percent + "%";
+      });
+    </script>
+  </body>
+</html>
